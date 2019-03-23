@@ -30,6 +30,12 @@
 			<tr>
 				<td><a href="withdrawAccountForm.obj"> Withdraw Amount </a></td>
 			</tr>
+			<tr>
+				<td><a href="showFundTransfer.obj"> Fund Transfer </a></td>
+			</tr>
+			<tr>
+				<td><a href="printAllTransactions.obj"> Withdraw Amount </a></td>
+			</tr>
 
 
 		</table>

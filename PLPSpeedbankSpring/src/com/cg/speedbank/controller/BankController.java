@@ -1,5 +1,7 @@
 package com.cg.speedbank.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cg.speedbank.beans.Customer;
+import com.cg.speedbank.beans.Transaction;
 import com.cg.speedbank.service.IBankService;
 
 @Controller
@@ -113,6 +116,42 @@ public class BankController {
 			return new ModelAndView("withdrawAccountForm", "message", error);
 
 
+	}
+	
+	@RequestMapping("/showFundTransfer")
+	public String showFundTransfer() {
+		return "fundTransferAccountForm";
+	}
+	
+	@RequestMapping("/showFundTransferForm")
+	public ModelAndView showFundTransferForm(@RequestParam("cusAccNoSender") int cusAccNoSender, @RequestParam("cusAccNoReciever") int cusAccNoReciever , @RequestParam("amount") long amount) {
+		boolean choice = service.fundTransfer(cusAccNoSender, cusAccNoReciever, amount);
+		String message = "Amount has been transferred successfully!";
+		String error = "Fund transfer could not be carried out successfully! ";
+		if(choice==true) {
+			return new ModelAndView("fundTransferAccountForm", "message", message);
+		}
+		else {
+			return new ModelAndView("fundTransferAccountForm", "message", error);
+		}
+	}
+	
+	@RequestMapping("/printAllTransactions")
+	public String printAllTransactions() {
+		return "printAllTransactionsForm";
+	}
+	
+
+	@RequestMapping("/printAllTransactionsForm")
+	public ModelAndView printAllTransactionsForm(@RequestParam("cusAccNo") int cusAccNo ) {
+		List<Transaction> transactions = service.printTransactions(cusAccNo);
+		String error = "Transactions cannot be displayed! ";
+		if(transactions!=null) {
+			return new ModelAndView("printAllTransactionsForm", "transactions", transactions);
+		}
+		else {
+			return new ModelAndView("printAllTransactionsForm", "transactions", error);
+		}
 	}
 	
 	
